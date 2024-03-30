@@ -37,87 +37,91 @@ const Login = () => {
     const res = await dispatch(login(loginData));
 
     // redirect to home page if true
-    if (res?.payload?.success) navigate("/");
+    if (res?.payload?.success) {
+      console.log("Hello")
+      setLoginData({
+        email: "",
+        password: "",
+      });
+      navigate("/");
+    }
 
     // clearing the login inputs
-    setLoginData({
-      email: "",
-      password: "",
-    });
+
   };
 
   return (
 
-      <div className="flex items-center bg-[#2e3138] justify-center h-[100vh]">
-        <form
-          onSubmit={handleLogin}
-          className="flex flex-col justify-center gap-4 rounded-lg p-4 text-white bg-[#1f2937] w-80 h-[26rem] shadow-[0_0_10px_black]"
+    <div className="flex items-center bg-[#2e3138] justify-center h-[100vh]">
+      <form
+        onSubmit={handleLogin}
+        className="flex flex-col justify-center gap-4 rounded-lg p-4 text-white bg-[#1f2937] w-80 h-[26rem] shadow-[0_0_10px_black]"
+      >
+        <h1 className="text-center text-2xl font-bold text-white">Login Page</h1>
+        <div className="flex flex-col gap-1">
+          <label className="text-lg font-semibold" htmlFor="email">
+            Email
+          </label>
+          <input
+            required
+            type="email"
+            name="email"
+            id="email"
+            placeholder="Enter your email"
+            className="bg-transparent text-white px-2 py-1 border"
+            value={loginData.email}
+            onChange={handleUserInput}
+          />
+        </div>
+
+        <div className="flex flex-col gap-1">
+          <label className="text-lg font-semibold" htmlFor="password">
+            Password
+          </label>
+          <input
+            required
+            type="password"
+            name="password"
+            id="password"
+            placeholder="Enter your password"
+            className="bg-transparent px-2 py-1 border text-white"
+            value={loginData.password}
+            onChange={handleUserInput}
+          />
+        </div>
+
+        {/* guest account access */}
+        {/* <div
+          onClick={() =>
+            setLoginData({ email: "test@gmail.com", password: "Test@123" })
+          }
+          className="text-center link text-accent cursor-pointer"
         >
-          <h1 className="text-center text-2xl font-bold text-white">Login Page</h1>
-          <div className="flex flex-col gap-1">
-            <label className="text-lg font-semibold" htmlFor="email">
-              Email
-            </label>
-            <input
-              required
-              type="email"
-              name="email"
-              id="email"
-              placeholder="Enter your email"
-              className="bg-transparent text-black px-2 py-1 border"
-              value={loginData.email}
-              onChange={handleUserInput}
-            />
-          </div>
+          Guest Login
+        </div> */}
 
-          <div className="flex flex-col gap-1">
-            <label className="text-lg font-semibold" htmlFor="password">
-              Password
-            </label>
-            <input
-              required
-              type="password"
-              name="password"
-              id="password"
-              placeholder="Enter your password"
-              className="bg-transparent px-2 py-1 border text-black"
-              value={loginData.password}
-              onChange={handleUserInput}
-            />
-          </div>
+        <button
+          className="w-full bg-yellow-600 hover:bg-yellow-500 transition-all ease-in-out duration-300 rounded-sm py-2 font-semibold text-lg cursor-pointer"
+          type="submit"
+        >
+          Login
+        </button>
 
-          {/* guest account access */}
-          <div
-            onClick={() =>
-              setLoginData({ email: "test@gmail.com", password: "Test@123" })
-            }
-            className="text-center link text-accent cursor-pointer"
-          >
-            Guest Login
-          </div>
-
-          <button
-            className="w-full bg-yellow-600 hover:bg-yellow-500 transition-all ease-in-out duration-300 rounded-sm py-2 font-semibold text-lg cursor-pointer"
-            type="submit"
-          >
-            Login
-          </button>
-
-          {/* <Link to={"/forgetpassword"}>
+        {/* <Link to={"/forgetpassword"}>
             <p className="text-center link text-accent cursor-pointer">
               Forget Password
             </p>
           </Link> */}
 
-          <p className="text-center">
-            Don't have an account ?{" "}
-            <Link to={"/signup"} className="link text-accent cursor-pointer">
-              Create Account
-            </Link>
-          </p>
-        </form>
-      </div>
-    
+        <p className="text-center">
+          Don't have an account ?{" "}
+          <Link to={"/signup"} className="link text-accent cursor-pointer">
+            Create Account
+          </Link>
+        </p>
+      </form>
+    </div>
+
   );
 };
 

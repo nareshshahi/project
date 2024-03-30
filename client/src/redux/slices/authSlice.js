@@ -11,7 +11,7 @@ const initialState = {
 // function to handle signup
 export const createAccount = createAsyncThunk("/auth/signup", async (data) => {
   try {
-    let res = axiosInstance.post("user/register", data);
+    let res = axiosInstance.post("/user/register", data);
 
     toast.promise(res, {
       loading: "Wait! Creating your account",
@@ -23,7 +23,7 @@ export const createAccount = createAsyncThunk("/auth/signup", async (data) => {
 
     // getting response resolved here
     res = await res;
-    return res.data;
+    return res.data;  
   } catch (error) {
     toast.error(error?.response?.data?.message);
   }
@@ -46,14 +46,14 @@ export const login = createAsyncThunk("auth/login", async (data) => {
     res = await res;
     return res.data;
   } catch (error) {
-    toast.error(error.message);
+    toast.error(error?.response?.data?.message);
   }
 });
 
 // function to handle logout
 export const logout = createAsyncThunk("auth/logout", async () => {
   try {
-    let res = axiosInstance.post("/user/logout");
+    let res = axiosInstance.get("/user/logout");
 
     await toast.promise(res, {
       loading: "Loading...",

@@ -13,8 +13,8 @@ import errormiddleware from './middlewares/error.middleware.js';
 app.use(express.urlencoded({ extended:true}));
 app.use(express.json());
 app.use(cors({
-    origin: [process.env.FRONTEND_URL],
-    Credential: true
+    origin: 'http://localhost:5173',
+    credentials: true
 }))
 app.use(cookieParser());
 app.use (morgan('dev')); // console random requested 

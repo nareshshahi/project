@@ -61,13 +61,13 @@ function Signup() {
             return;
         }
         // checking valid email
-        if(!isEmail(signupData.email)) {
+        if(!signupData.email.match(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/)){
             toast.error("Invalid email id");
             return;
         }
         // checking password validation
-        if(!isValidPassword(signupData.password)) {
-            toast.error("Password should be 6 - 16 character long with atleast a number and special character");
+        if(!signupData.password.match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/)) {
+            toast.error("Password should have minimum eight characters at least one uppercase letter, one lowercase letter, one number and one special character");
             return;
         }
 
@@ -80,7 +80,7 @@ function Signup() {
         // dispatch create account action
         const response = await dispatch(createAccount(formData));
         if(response?.payload?.success)
-            navigate("/");
+        
 
         setSignupData({
             fullName: "",
@@ -89,6 +89,7 @@ function Signup() {
             avatar: ""
         });
         setPreviewImage("");
+        navigate("/login");
 
 
     }

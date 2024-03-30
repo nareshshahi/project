@@ -96,14 +96,18 @@ const login = async (req, res, next) => {
         }
         const user = await User.findOne({ email }).select('+password');
         if (!user || !user.comparePassword(password)) {
-            return next(new AppError('email and password are not vallid', 400))
+            return next(new AppError('User with given email does not exist', 400))
+        }
+        const match=await user.comparePassword(password);
+        if(!match){
+            return next(new AppError("Password does not match",400))
         }
         const token = await user.generateJWTToken();
         user.password = undefined;
 
         res.cookie('token', token, cookieOptions);
         res.status(200).json({
-            sucess: true,
+            success: true,
             message: "user login sucessfully",
             user  //
         });
@@ -128,7 +132,7 @@ const logout = (req, res) => {
         httpOnly: true
     });
     res.status(200).json({
-        sucess: true,
+        success: true,
         message: 'user log out sucessfully'
     });
 
